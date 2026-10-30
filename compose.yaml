@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: cinema_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: cinema_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: Password123
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+  pgadmin:
+    image: dpage/pgadmin4:9.18
+    container_name: pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: email@123.com
+      PGADMIN_DEFAULT_PASSWORD: Password123
+    ports:
+      - "127.0.0.1:8080:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
+  pgadmin_data:
